@@ -1,0 +1,13 @@
+apiVersion: v1
+entries:
+  hello-bengo:
+  - apiVersion: v1
+    appVersion: "1.0"
+    created: 2018-05-11T02:59:09.936036212Z
+    description: A Helm chart for Kubernetes
+    digest: c60a65d242e0418bb2b3cece31fd4e5afecca3468dd70a634936eacdf9229d60
+    name: hello-bengo
+    urls:
+    - https://gobengo.github.io/helm-charts/hello-bengo-0.1.0.tgz
+    version: 0.1.0
+generated: 2018-05-11T02:59:09.935559871Z
