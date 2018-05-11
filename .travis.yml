@@ -18,8 +18,6 @@ install:
 - helm init --client-only
 - sudo pip install yamllint=="${YAMLLINT_VERSION}"
 before_script:
-- openssl aes-256-cbc -K "$encrypted_${ENCRYPTION_LABEL}_key" -iv "$encrypted_${ENCRYPTION_LABEL}_iv"
-  -in deploy_key.enc -out deploy_key -d
 - cp deploy_key .ssh-keys/travis
 - chmod 600 .ssh-keys/travis
 - eval "$(ssh-agent -s)"
@@ -92,3 +90,6 @@ after_success:
      git push ${SSH_REPO}
     fi
   fi
+before_install:
+- openssl aes-256-cbc -K $encrypted_a9e98976121b_key -iv $encrypted_a9e98976121b_iv
+  -in deploy_key.enc -out deploy_key -d
