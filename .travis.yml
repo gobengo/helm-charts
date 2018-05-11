@@ -18,6 +18,7 @@ install:
 - helm init --client-only
 - sudo pip install yamllint=="${YAMLLINT_VERSION}"
 before_script:
+- mkdir -p .ssh-keys
 - cp deploy_key .ssh-keys/travis
 - chmod 600 .ssh-keys/travis
 - eval "$(ssh-agent -s)"
