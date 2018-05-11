@@ -8,6 +8,7 @@ env:
   - REPO_DIR=/home/travis/build/gobengo/helm-charts
   - GH_URL=https://gobengo.github.io/helm-charts
   - YAMLLINT_VERSION=1.8.1
+  - ENCRYPTION_LABEL=a9e98976121b
   - secure: |
       zEDBiksitH/W7GMlAdWLjoicv0nFkT3uL3gd81S//HDtQsI8imkIT5DBo3vXleEEfUmzkrF3knpcYMdDGO2BAf1CI+wG2w+32tGoMASEpW2QR/ags4pgcYEi+0PZVNLrl+gHx21lL2+1RMaavEWAvYYHqPu840IWb9Ah7Vbbr3LWO3SJJvoRl5pO+vH7JNeBWp2sdsdAbGdMaQzFkfI+09fhoy7cxIAHE5ZmVibjUZZS0jveuppKm8I652daqe6pNPHJFr1CUEQ9KVpRvN+q+nfqtxlWzwztkmotzFxsS8T7qnE7drS/trXXa/VCtmCXb7DFnAYmXzhcEKMM3xFRjb9XbsLEqx2USt3Ro+0z69ekukd07ygditglN26LG2Zdqiz1aXBL6Y8PjG4u91Unvqf7qJbW9me8/5TRkR5z2LXbY0hqjGFsJXdY73UEr0PEP0TI7lnZCLkK8Jg52S1gnel+bOSPnvOdz6786T+yMmFwnjDBf4pbcBs+OleVRFzcjsSivJuF+ti/OZ+oiac11CFi213j1vQwx1L7lOHs1pyTqck23Asom6V5gVDViL5nIMGuaK/E8gBoj/cPPj1Qxr8wTxGauok6E1kLHNt+SsUsli9t2SVaDas6IJh7jhYXO0vcm3jN/fTNhR7/DH5daTPTRDdTJ6ByEhMkYdfbA6I=
 install:
@@ -16,7 +17,13 @@ install:
 - PATH=`pwd`/linux-amd64/:$PATH
 - helm init --client-only
 - sudo pip install yamllint=="${YAMLLINT_VERSION}"
-before_script: []
+before_script:
+- 'openssl aes-256-cbc -K $encrypted_${ENCRYPTION_LABEL}_key -iv $encrypted_${ENCRYPTION_LABEL}_iv
+  -in deploy_key.enc -out deploy_key -d'
+- cp deploy_key .ssh-keys/travis
+- chmod 600 .ssh-keys/travis
+- eval "$(ssh-agent -s)"
+- ssh-add .ssh-keys/travis
 script:
 - |
   for dir in `ls ${REPO_DIR}/charts`; do
