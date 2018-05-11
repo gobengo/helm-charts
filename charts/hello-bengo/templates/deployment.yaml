@@ -27,6 +27,9 @@ spec:
             - name: http
               containerPort: 80
               protocol: TCP
+          volumeMounts:
+          - name: nginx-html
+            mountPath: /usr/share/nginx/html
           livenessProbe:
             httpGet:
               path: /
@@ -49,3 +52,7 @@ spec:
       tolerations:
 {{ toYaml . | indent 8 }}
     {{- end }}
+      volumes:
+        - name: nginx-html
+          configMap:
+            name: {{ template "hello-bengo.fullname" . }}-nginx-html

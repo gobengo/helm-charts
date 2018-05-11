@@ -44,3 +44,7 @@ nodeSelector: {}
 tolerations: []
 
 affinity: {}
+
+html_dir:
+  index.html: |
+    <h1>hello-bengo</h1>
