@@ -18,6 +18,8 @@ spec:
       labels:
         app: {{ template "hello-bengo.name" . }}
         release: {{ .Release.Name }}
+      annotations:
+        checksum/config: {{ include (print $.Template.BasePath "/nginx-html-configmap.yaml") . | sha256sum }}
     spec:
       containers:
         - name: {{ .Chart.Name }}
